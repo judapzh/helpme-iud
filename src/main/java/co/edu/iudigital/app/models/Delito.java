@@ -1,4 +1,4 @@
-package models;
+package co.edu.iudigital.app.models;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
