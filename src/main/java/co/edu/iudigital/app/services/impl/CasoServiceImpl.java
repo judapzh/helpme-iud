@@ -30,7 +30,7 @@ public class CasoServiceImpl implements ICasoService {
     public List<CasoDTO> findAll() {
         List<Caso> casos = casoRepository.findAll();
         // TODO: Refactoring a un mapper en paquete util
-        return casos.stream().map(c -> {
+        return casos.stream().map(c ->
                    CasoDTO.builder()
                             .id(c.getId())
                             .fechaHora(c.getFechaHora())
@@ -40,10 +40,9 @@ public class CasoServiceImpl implements ICasoService {
                             .detalle(c.getDetalle())
                             .urlMap(c.getUrlMap())
                             .rmiUrl(c.getRmiUrl())
-                            .build();
-                }
-        ).collect(Collectors.toList());
-    }
+                            .build())
+                              .collect(Collectors.toList());
+        }
 
     @Override
     public CasoDTO findById(Long id) {

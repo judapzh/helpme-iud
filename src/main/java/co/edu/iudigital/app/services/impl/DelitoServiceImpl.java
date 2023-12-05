@@ -38,8 +38,8 @@ public class DelitoServiceImpl implements IDelitoService {
               .id(d.getId())
               .nombre(d.getNombre())
               .descripcion(d.getDescripcion())
-              .build()
-        ).collect(Collectors.toList());
+              .build())
+                .collect(Collectors.toList());
     }
 
     @Override

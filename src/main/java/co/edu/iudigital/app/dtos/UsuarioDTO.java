@@ -1,6 +1,7 @@
 package co.edu.iudigital.app.dtos;
 
 import co.edu.iudigital.app.models.Role;
+import jdk.jshell.Snippet;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,4 +36,7 @@ public class UsuarioDTO {
     List<Role> roles;
 
 
+    public static Snippet builder() {
+        return null;
+    }
 }
