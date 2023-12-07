@@ -18,7 +18,5 @@ public class DelitoDTO {
 
     String descripcion;
 
-    public static Snippet builder() {
-        return null;
-    }
+
 }

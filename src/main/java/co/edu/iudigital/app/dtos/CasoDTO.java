@@ -30,7 +30,6 @@ public class CasoDTO {
 
     String rmiUrl;
 
-    public static Snippet builder() {
-        return null;
-    }
+
+
 }

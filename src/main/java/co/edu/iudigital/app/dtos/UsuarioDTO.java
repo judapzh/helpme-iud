@@ -36,7 +36,5 @@ public class UsuarioDTO {
     List<Role> roles;
 
 
-    public static Snippet builder() {
-        return null;
+
     }
-}

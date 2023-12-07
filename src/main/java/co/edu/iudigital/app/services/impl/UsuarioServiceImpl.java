@@ -30,17 +30,18 @@ public class UsuarioServiceImpl implements IUsuarioService {
     public List<UsuarioDTO> findAll() {
         List<Usuario> usuarios = (List<Usuario>) usuarioRepository.findAll();
         // TODO: Refactoring a un mapper en paquete util
-        return usuarios.stream().map(u ->
-                UsuarioDTO.builder()
-                        .id(u.getId())
-                        .nombre(u.getNombre())
-                        .apellido(u.getApellido())
-                        .fechaNacimiento(u.getFechaNacimiento())
-                        .enabled(u.getEnabled())
-                        .image(u.getImage())
-                        .redSocial(u.getRedSocial())
-                        .roles(u.getRoles())
-                        .build()
+        return usuarios.stream().map(u -> {
+                    UsuarioDTO.builder()
+                            .id(u.getId())
+                            .nombre(u.getNombre())
+                            .apellido(u.getApellido())
+                            .fechaNacimiento(u.getFechaNacimiento())
+                            .enabled(u.getEnabled())
+                            .image(u.getImage())
+                            .redSocial(u.getRedSocial())
+                            .roles(u.getRoles())
+                            .build();
+                }
         ).collect(Collectors.toList());
     }
 
