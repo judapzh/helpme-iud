@@ -1,66 +1,58 @@
 package co.edu.iudigital.app.services.impl;
 
 import co.edu.iudigital.app.dtos.CasoDTO;
+import co.edu.iudigital.app.dtos.CasoDTORequest;
+import co.edu.iudigital.app.exception.CustomException;
 import co.edu.iudigital.app.models.Caso;
-import co.edu.iudigital.app.repositories.ICasoRepository;
 import co.edu.iudigital.app.services.ifaces.ICasoService;
+import co.edu.iudigital.app.utils.MapperCaso;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class CasoServiceImpl implements ICasoService {
-    private final ICasoRepository casoRepository;
+
+    // Inyección de dependencias (por atributo)
+    @Autowired
+    private ICasoRepository casoRepository;
 
     @Autowired
-    public CasoServiceImpl(ICasoRepository casoRepository){
-        this.casoRepository = casoRepository;
-    }
+    private MapperCaso mapper; // Mapper de utilidades
 
     @Override
     public List<CasoDTO> getAll() {
-        return null;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<CasoDTO> findAll() {
         List<Caso> casos = casoRepository.findAll();
-        // TODO: Refactoring a un mapper en paquete util
-        return casos.stream().map(c ->
-                   CasoDTO.builder()
-                            .id(c.getId())
-                            .fechaHora(c.getFechaHora())
-                            .latitud(c.getLatitud())
-                            .altitud(c.getAltitud())
-                            .isVisible(c.getIsVisible())
-                            .detalle(c.getDetalle())
-                            .urlMap(c.getUrlMap())
-                            .rmiUrl(c.getRmiUrl())
-                            .build())
-                              .collect(Collectors.toList());
-        }
+        return mapper.toCasosDTO(casos);
+    }
 
     @Override
-    public CasoDTO findById(Long id) {
+    public CasoDTO save(CasoDTO caso) throws CustomException {
         return null;
     }
 
     @Override
-    public CasoDTO save(CasoDTO casoDTO) {
-        return null;
+    public CasoDTO save(CasoDTORequest casoDTO) {
+        Caso caso = mapper.toCaso(casoDTO);
+        caso = casoRepository.save(caso);
+        return mapper.toCasoDTO(caso);
     }
 
     @Override
     public CasoDTO getById(Long id) {
-        return null;
+        Optional<Caso> casoOptional = casoRepository.findById(id);
+        CasoDTO casoDTO = new CasoDTO();
+        if (casoOptional.isPresent()) {
+            casoDTO = mapper.toCasoDTO(casoOptional.get());
+        }
+        return casoDTO;
     }
 
     @Override
-    public void delete(Long id) {
-
+    public void deleteById(Long id) {
+        casoRepository.deleteById(id);
     }
 }
-

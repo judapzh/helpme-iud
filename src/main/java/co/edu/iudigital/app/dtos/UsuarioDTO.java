@@ -1,11 +1,9 @@
 package co.edu.iudigital.app.dtos;
 
+
 import co.edu.iudigital.app.models.Role;
-import jdk.jshell.Snippet;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
@@ -14,7 +12,9 @@ import java.util.List;
 
 @Getter
 @Setter
-@Builder
+@Builder // patrón
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UsuarioDTO {
 
@@ -37,16 +37,8 @@ public class UsuarioDTO {
 
     List<Role> roles;
 
-    UsuarioDTO usuario = UsuarioDTO.builder()
-            .id(1L)
-            .username("nombreDeUsuario")
-            .nombre("Nombre")
-            .apellido("Apellido")
-            .fechaNacimiento(LocalDate.of(2000, 1, 1))
-            .enabled(true)
-            .image("ruta/de/imagen.jpg")
-            .redSocial(false)
-            .build();
+
+
 
 
 

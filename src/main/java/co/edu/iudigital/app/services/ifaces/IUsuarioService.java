@@ -2,6 +2,7 @@ package co.edu.iudigital.app.services.ifaces;
 
 
 import co.edu.iudigital.app.dtos.UsuarioDTO;
+import co.edu.iudigital.app.dtos.UsuarioDTORequest;
 import co.edu.iudigital.app.exception.CustomException;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,9 +15,10 @@ public interface IUsuarioService {
     List<UsuarioDTO> findAll();
     UsuarioDTO findById(Long id) throws CustomException;
 
-    UsuarioDTO save(UsuarioDTO role) throws CustomException;
+    UsuarioDTO save(UsuarioDTORequest role) throws CustomException;
 
     UsuarioDTO  getById(Long id) throws CustomException;
 
     void delete(Long id) throws CustomException;
+
 }

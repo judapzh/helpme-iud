@@ -1,64 +1,57 @@
 package co.edu.iudigital.app.services.impl;
 
-
 import co.edu.iudigital.app.dtos.DelitoDTO;
+import co.edu.iudigital.app.dtos.DelitoDTORequest;
 import co.edu.iudigital.app.models.Delito;
 import co.edu.iudigital.app.repositories.IDelitoRepository;
 import co.edu.iudigital.app.services.ifaces.IDelitoService;
+import co.edu.iudigital.app.utils.Mapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+import java.util.Optional;
 
 @Service
 public class DelitoServiceImpl implements IDelitoService {
-    private final IDelitoRepository delitoRepository;
+
+    // inyección de dependencias (por atributo)
+    @Autowired
+    private IDelitoRepository delitoRepository;
 
     @Autowired
-    public DelitoServiceImpl(IDelitoRepository delitoRepository){
-        this.delitoRepository = delitoRepository;
-    }
+    private Mapper mapper; // mapper de utilidades
 
     @Override
     public List<DelitoDTO> getAll() {
-        return null;
-    }
+        List<Delito> delitos =
+                delitoRepository.findAll();
+        return mapper.toDelitosDTO(delitos);
 
-    @Transactional(readOnly = true)
-    @Override
-    public List<DelitoDTO> findAll() {
-        List<Delito> delitos = delitoRepository.findAll();
-        // TODO: Refactoring a un mapper en paquete util
-        return delitos.stream().map(d ->
-            DelitoDTO.builder()
-              .id(d.getId())
-              .nombre(d.getNombre())
-              .descripcion(d.getDescripcion())
-              .build())
-                .collect(Collectors.toList());
     }
 
     @Override
-    public DelitoDTO findById(Long id) {
-        return null;
-    }
-
-    @Override
-    public DelitoDTO save(DelitoDTO delitoDTO) {
-        return null;
+    public DelitoDTO save(DelitoDTORequest delitoDTO) {
+        Delito delito = mapper.toDelito(delitoDTO);
+        delito = delitoRepository.save(delito);
+        return mapper.toDelitoDTO(delito);
     }
 
     @Override
     public DelitoDTO getById(Long id) {
-        return null;
+        Optional<Delito> delitoOptional =
+                delitoRepository.findById(id);
+        DelitoDTO delitoDTO;
+        delitoDTO = new DelitoDTO();
+        if(delitoOptional.isPresent()) {
+            delitoDTO = mapper.toDelitoDTO(delitoOptional.get());
+        }
+        return delitoDTO;
     }
 
     @Override
-    public void delete(Long id) {
-
+    public void deleteById(Long id) {
+        delitoRepository.deleteById(id);
     }
 }
